@@ -1,0 +1,11 @@
+**/*.bak
+output/
+**/*.swp
+
+**/*~
+
+.*.marks 
+*#
+*.ML
+*backup*
+final_uncleaned/
