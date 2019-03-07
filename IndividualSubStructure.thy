@@ -1,5 +1,5 @@
 theory IndividualSubStructure
-  imports Individuals4
+  imports Individuals
 begin
 
 locale individual_substructure =
@@ -18,18 +18,18 @@ locale individual_substructure =
     m_preserve_worlds_2: "w \<in> \<W>\<^bsub>src\<^esub> \<Longrightarrow> \<exists>w'. w' \<in> \<W>\<^bsub>tgt\<^esub> \<and> w = w' \<inter> \<I>\<^bsub>src\<^esub>"
 begin
 
-lemma m_preserve_inherence_2: 
+(* UNUSED lemma m_preserve_inherence_2: 
   "x \<triangleleft>\<^bsub>src\<^esub> y \<Longrightarrow> x \<triangleleft>\<^bsub>tgt\<^esub> y" and
   "\<lbrakk> x \<in> \<I>\<^bsub>src\<^esub> ; x \<triangleleft>\<^bsub>tgt\<^esub> y \<rbrakk> \<Longrightarrow> x \<triangleleft>\<^bsub>src\<^esub> y"
   using preserve_inherence[of x y] src.momentsI src.individuals_moments_substantials
   subgoal by blast  
-  by (metis preserve_inherence same_substantials src.individuals_cases substantialsE)
+  by (metis preserve_inherence same_substantials src.individuals_cases substantialsE) *)
 
-lemma  m_preserve_worlds: "{ w \<inter> \<I>\<^bsub>src\<^esub> | w . w \<in> \<W>\<^bsub>tgt\<^esub>} = \<W>\<^bsub>src\<^esub>"  
+(* UNUSED lemma  m_preserve_worlds: "{ w \<inter> \<I>\<^bsub>src\<^esub> | w . w \<in> \<W>\<^bsub>tgt\<^esub>} = \<W>\<^bsub>src\<^esub>"  
   apply (intro set_eqI ; simp add: m_preserve_worlds_1 ; intro iffI ; (elim exE conjE)? ; simp?)
   subgoal for x w using m_preserve_worlds_1 by simp
   subgoal for w using m_preserve_worlds_2 by blast
-  done
+  done *)
 
 lemma individuals_subset: "\<I>\<^bsub>src\<^esub> \<subseteq> \<I>\<^bsub>tgt\<^esub>"
   using tgt.individuals_moments_substantials       
@@ -57,14 +57,14 @@ qed
 
 lemmas individual_substructure_eqI = src_tgt_eqI
 
-lemma worlds_eqI:
+(* UNUSED lemma worlds_eqI:
   assumes "\<M>\<^bsub>src\<^esub> = \<M>\<^bsub>tgt\<^esub>"
   shows "\<W>\<^bsub>src\<^esub> = \<W>\<^bsub>tgt\<^esub>"
-  using individual_substructure_eqI[OF assms] by simp
+  using individual_substructure_eqI[OF assms] by simp *)
 
 end
 
-lemma individual_substructure_refl:
+(* UNUSED lemma individual_substructure_refl:
   assumes assms[simp,intro!]:"individual_structure IS"
   shows "individual_substructure IS IS"
 proof -
@@ -76,9 +76,9 @@ proof -
       apply (intro exI[of _ w] ; simp)      
       by (simp add: inf.absorb1 worlds_are_made_of_individuals)
     done
-qed
+qed *)
 
-lemma individual_substructure_antisym:
+(* UNUSED lemma individual_substructure_antisym:
   assumes "individual_substructure IS\<^sub>1 IS\<^sub>2" "individual_substructure IS\<^sub>2 IS\<^sub>1"
   shows "IS\<^sub>1 = IS\<^sub>2"
 proof -
@@ -87,9 +87,9 @@ proof -
   show ?thesis  
     apply (intro ISS21.individual_substructure_eqI[symmetric])    
     using ISS12.moments_subset ISS21.moments_subset by blast
-qed  
+qed  *)
 
-lemma individual_substructure_trans:
+(* UNUSED lemma individual_substructure_trans:
   assumes "individual_substructure IS\<^sub>1 IS\<^sub>2" "individual_substructure IS\<^sub>2 IS\<^sub>3"
   shows "individual_substructure IS\<^sub>1 IS\<^sub>3"
 proof -
@@ -124,6 +124,6 @@ proof -
       using ISS12.m_preserve_worlds_2[of w,THEN exE] ISS23.m_preserve_worlds_2      
       by (metis ISS12.individuals_subset inf.absorb_iff2 inf_assoc)
     done
-qed
+qed *)
 
 end

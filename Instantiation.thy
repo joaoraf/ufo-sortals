@@ -1,5 +1,5 @@
-theory Instantiation4
-  imports Individuals4 Universals2 ClosedPermutations
+theory Instantiation
+  imports Individuals Universals ClosedPermutations
 begin
 
 record ('i,'u) instantiation_structure =
@@ -78,11 +78,11 @@ definition miof :: "('i,'u) instantiation_structure \<Rightarrow> 'i \<Rightarro
   "x \<Colon>\<^sub>\<diamondop> u \<equiv> \<exists>w \<in> worlds \<I>\<S>. x \<Colon>\<^bsub>w\<^esub> u"
   for IS (structure)
 
-lemma instantiation_structure_eqI:
+(* UNUSED lemma instantiation_structure_eqI:
   fixes A B :: "('i,'u) instantiation_structure"
   assumes "\<I>\<S>\<^bsub>A\<^esub> = \<I>\<S>\<^bsub>B\<^esub>" "\<U>\<S>\<^bsub>A\<^esub> = \<U>\<S>\<^bsub>B\<^esub>" "moment_miof A = moment_miof B"
   shows "A = B"
-  using assms by (cases A ; cases B  ; simp)
+  using assms by (cases A ; cases B  ; simp) *)
 
 locale instantiation_structure_defs =
   fixes IS :: "('i,'u) instantiation_structure" (structure) 
@@ -192,11 +192,11 @@ proof -
 qed
 
 
-lemma iof_moment_rigid: 
+(* UNUSED lemma iof_moment_rigid: 
   assumes "m \<in> \<M>\<^sub>*" "m \<Colon>\<^bsub>w\<^esub> U" "w' \<in> \<W>\<^sub>*" "m \<in> w'"
   shows "m \<Colon>\<^bsub>w'\<^esub> U" 
   using assms 
-  by (meson exactly_similar_refl individual_structure.individuals_cases individual_structure.inheres_in_scope individual_structure_axioms iof_def moment_iof_agrees_with_similarity momentsE substantial_iof_E)
+  by (meson exactly_similar_refl individual_structure.individuals_cases individual_structure.inheres_in_scope individual_structure_axioms iof_def moment_iof_agrees_with_similarity momentsE substantial_iof_E) *)
   
 lemma char_by_E2:
   assumes "char_by\<^sub>* U\<^sub>1 U\<^sub>2"
@@ -250,7 +250,7 @@ lemma  iof_S_simp: "x \<in> \<S>\<^sub>* \<or> u \<in> \<U>\<^sub>s\<^sub>* \<Lo
 lemma  iof_M_simp: "x \<in> \<M>\<^sub>* \<or> u \<in> \<U>\<^sub>m\<^sub>* \<Longrightarrow> x \<Colon>\<^bsub>w\<^esub> u \<longleftrightarrow> x \<Colon>\<^sub>m\<^bsub>w\<^esub> u"   
   by (meson individuals_cases iof_E iof_M_I iof_M_U_simp substantial_iof_E substantialsE)
 
-lemma rigid_moment_universals: "u \<in> \<U>\<^sub>m\<^sub>* \<Longrightarrow> rigid u"
+(* UNUSED lemma rigid_moment_universals: "u \<in> \<U>\<^sub>m\<^sub>* \<Longrightarrow> rigid u"
   apply (clarsimp simp: rigid_def ; intro conjI allI ballI impI ; (elim conjE)?)
   subgoal G1 using universal_I by simp
   subgoal G2 for x w\<^sub>1 w\<^sub>2
@@ -258,7 +258,7 @@ lemma rigid_moment_universals: "u \<in> \<U>\<^sub>m\<^sub>* \<Longrightarrow> r
           ; simp?)
     subgoal by (simp add: iof_M_U_simp)    
     by (simp add: iof_M_simp)
-  done
+  done *)
   
 lemma subtantial_iof_agrees_with_subsumes:
   assumes "x \<Colon>\<^sub>s\<^bsub>w\<^esub> U" "U \<preceq>\<^sub>s\<^sub>* U'"
@@ -319,10 +319,10 @@ proof (rule ccontr ; simp only: not_ex de_Morgan_conj not_all not_imp not_not)
   then show False using assms by simp
 qed
 
-lemma  not_subst_miof_E:
+(* UNUSED lemma  not_subst_miof_E:
   assumes "s\<^sub>y \<in> \<S>\<^sub>*" "U \<in> \<U>\<^sub>s\<^sub>*" "\<not> s\<^sub>y \<Colon>\<^sub>\<diamondop> U" "w \<in> \<W>\<^sub>*" "s\<^sub>y \<in> w" 
   obtains u where "char_by\<^sub>* U u" "\<And>m. \<lbrakk> m \<triangleleft>\<^sub>* s\<^sub>y ; m \<in> w \<rbrakk> \<Longrightarrow> \<not> m \<Colon>\<^sub>m\<^sub>\<diamondop> u" 
-  using not_subst_miof_ex[OF assms] by metis
+  using not_subst_miof_ex[OF assms] by metis *)
 
 lemma equi_instances_S_I[intro!]:
   assumes "x \<in> \<S>\<^sub>*" "y \<in> \<S>\<^sub>*" "\<And>U w. x \<Colon>\<^sub>s\<^bsub>w\<^esub> U \<longleftrightarrow> y \<Colon>\<^sub>s\<^bsub>w\<^esub> U"
@@ -371,10 +371,10 @@ lemma equi_instances_I[intro!]:
   by (auto simp: equi_instances_def)
 
 
-lemma equi_instances_cases[cases pred]:
+(* UNUSED lemma equi_instances_cases[cases pred]:
   assumes "x \<sim> y"
   obtains (moments) "x \<sim>\<^sub>m y" | (substantials) "x \<sim>\<^sub>s y"  
-  using assms by (simp only: equi_instances_def ; metis)
+  using assms by (simp only: equi_instances_def ; metis) *)
 
 lemma equi_instances_iff:
   "x \<sim> y \<longleftrightarrow> x \<in> \<S>\<^sub>* \<and> y \<in> \<S>\<^sub>* \<and> x \<sim>\<^sub>s y \<or>
@@ -411,7 +411,7 @@ lemma id_on_equi_iof_perms[intro!,simp]: "id \<in> EquiPerms"
   using ClosedPerms_iff equi_instances_def id_on_perm  
   using equi_instances_M_refl individuals_moments_substantials by auto
 
-lemma equi_iof_perms_ne[intro!,simp]: "EquiPerms \<noteq> {}" using id_on_equi_iof_perms by blast
+(* UNUSED lemma equi_iof_perms_ne[intro!,simp]: "EquiPerms \<noteq> {}" using id_on_equi_iof_perms by blast *)
 
 
 end

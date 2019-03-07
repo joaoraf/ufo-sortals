@@ -1,4 +1,4 @@
-theory Individuals4
+theory Individuals
   imports Common
 begin
 
@@ -48,20 +48,20 @@ definition existentially_dependent :: "'i individual_structure \<Rightarrow> 'i 
 lemma ed_I[intro!]: "\<lbrakk> x \<in> \<I> ; y \<in> \<I> ; \<forall>w. w \<in> \<W> \<and> x \<in> w \<longrightarrow> y \<in> w \<rbrakk> \<Longrightarrow> ed x y" for IS (structure)
   by (auto simp: existentially_dependent_def)
 
-lemma ed_I_1: "\<lbrakk> x \<in> \<I> ; y \<in> \<I> ; \<And>w. \<lbrakk> w \<in> \<W> ; x \<in> w \<rbrakk> \<Longrightarrow> y \<in> w \<rbrakk> \<Longrightarrow> ed x y" for IS (structure)
-  by (auto)
+(* UNUSED lemma ed_I_1: "\<lbrakk> x \<in> \<I> ; y \<in> \<I> ; \<And>w. \<lbrakk> w \<in> \<W> ; x \<in> w \<rbrakk> \<Longrightarrow> y \<in> w \<rbrakk> \<Longrightarrow> ed x y" for IS (structure)
+  by (auto) *)
 
 lemma ed_E[elim!]: "\<lbrakk> ed x y ; \<lbrakk> x \<in> \<I> ; y \<in> \<I> ; \<forall>w. w \<in> \<W> \<and> x \<in> w \<longrightarrow> y \<in> w \<rbrakk> \<Longrightarrow> P \<rbrakk> \<Longrightarrow> P" for IS (structure)
   by (auto simp: existentially_dependent_def)
 
-lemma ed_E_1: "\<lbrakk> ed x y ; \<And>x y. \<lbrakk> x \<in> \<I> ; y \<in> \<I> ; \<And>w. \<lbrakk> w \<in> \<W> ; x \<in> w \<rbrakk> \<Longrightarrow> y \<in> w \<rbrakk> \<Longrightarrow> P \<rbrakk> \<Longrightarrow> P" for IS (structure)
-  by (auto)
+(* UNUSED lemma ed_E_1: "\<lbrakk> ed x y ; \<And>x y. \<lbrakk> x \<in> \<I> ; y \<in> \<I> ; \<And>w. \<lbrakk> w \<in> \<W> ; x \<in> w \<rbrakk> \<Longrightarrow> y \<in> w \<rbrakk> \<Longrightarrow> P \<rbrakk> \<Longrightarrow> P" for IS (structure)
+  by (auto) *)
 
-lemma ed_refl[intro!]: "x \<in> \<I> \<Longrightarrow> ed x x" for IS (structure)
-  using ed_I by metis
+(* UNUSED lemma ed_refl[intro!]: "x \<in> \<I> \<Longrightarrow> ed x x" for IS (structure)
+  using ed_I by metis *)
 
-lemma ed_trans[trans]: "\<lbrakk> ed x y ; ed y z \<rbrakk> \<Longrightarrow> ed x z" for IS (structure)
-  by (auto simp: existentially_dependent_def)
+(* UNUSED lemma ed_trans[trans]: "\<lbrakk> ed x y ; ed y z \<rbrakk> \<Longrightarrow> ed x z" for IS (structure)
+  by (auto simp: existentially_dependent_def) *)
 
 lemma moments_subset_individuals[simp,intro!]: "\<M> \<subseteq> \<I>"
   for IS :: "'i individual_structure" (structure)  
@@ -127,11 +127,11 @@ lemma individuals_moments_substantials: "\<I> = \<S> \<union> \<M>"
 lemma substantials_moments_disj: "\<S> \<inter> \<M> = {}"
   by (auto simp: substantials_def moments_def)
 
-lemma substantials_eq_diff: "\<S> = \<I> - \<M>" 
-  using individuals_moments_substantials substantials_moments_disj by blast
+(* UNUSED lemma substantials_eq_diff: "\<S> = \<I> - \<M>" 
+  using individuals_moments_substantials substantials_moments_disj by blast *)
 
-lemma moments_eq_diff: "\<M> = \<I> - \<S>" 
-  using individuals_moments_substantials substantials_moments_disj by blast
+(* UNUSED lemma moments_eq_diff: "\<M> = \<I> - \<S>" 
+  using individuals_moments_substantials substantials_moments_disj by blast *)
 
 lemma individuals_cases[cases set]:
   assumes "x \<in> \<I>"
@@ -151,10 +151,10 @@ lemma bearerI[intro]:
   using momentsE assms 
   by (simp add: inheres_in_single the_equality)
 
-lemma bearer_eqE:
+(* UNUSED lemma bearer_eqE:
   assumes "\<beta> x = y"
   obtains "x \<in> \<M> \<Longrightarrow> x \<triangleleft> y"
-  using assms by blast
+  using assms by blast *)
 
 
 lemma inheres_in_scope_2:
@@ -194,8 +194,8 @@ lemma individuals_iff: "x \<in> \<I> \<longleftrightarrow> (\<exists>w. w \<in> 
     every_individual_exists_somewhere       
   by (meson contra_subsetD)
 
-lemma ed_intro_1: "x \<triangleleft> y \<or> x \<hookrightarrow> y  \<Longrightarrow> ed x y" 
-  using inherence_imp_ed refers_to_imp_ed by metis
+(* UNUSED lemma ed_intro_1: "x \<triangleleft> y \<or> x \<hookrightarrow> y  \<Longrightarrow> ed x y" 
+  using inherence_imp_ed refers_to_imp_ed by metis *)
 
 lemma ed_scope: "ed x y \<Longrightarrow> x \<in> \<I> \<and> y \<in> \<I>"
   by blast
@@ -209,8 +209,8 @@ lemma undefined_simps[iff]:
     inheres_in_scope refers_to_scope exactly_similar_scope ed_scope
   by metis+
 
-lemma bearer_non_moment[simp,intro!]: "\<beta> x \<notin> \<M>"  
-  by (metis bearer_def bearer_eq inheres_in_sep momentsE undefined_not_in_moments)
+(* UNUSED lemma bearer_non_moment[simp,intro!]: "\<beta> x \<notin> \<M>"  
+  by (metis bearer_def bearer_eq inheres_in_sep momentsE undefined_not_in_moments) *)
 
 lemma bearer_ex1[dest]:
   assumes "w \<in> \<W>" "x \<in> w" "x \<triangleleft> y"

@@ -36,7 +36,7 @@ context individual_structure
 begin
 
 
-lemma closed_perms_mono:
+(* UNUSED lemma closed_perms_mono:
   assumes "closure P" "closure Q" "\<And>x y. P x y \<longrightarrow> Q x y"
   shows "\<Pi>\<^bsub>P\<^esub> \<subseteq> \<Pi>\<^bsub>Q\<^esub>"  
 proof -  
@@ -44,7 +44,7 @@ proof -
   interpret Q: closure_rel_P Q \<I> using assms by simp
   show ?thesis
     using assms(3) by auto
-qed
+qed *)
 
 lemma substructure_closed_perms:
   fixes IS'

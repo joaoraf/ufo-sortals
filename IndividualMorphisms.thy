@@ -1,5 +1,5 @@
 theory IndividualMorphisms
-  imports Individuals4
+  imports Individuals
 begin
 
 lemma set_comp_eq_iff_1: "{F x | x . x \<in> A} = {G x | x . x \<in> B} \<longleftrightarrow>
@@ -22,12 +22,12 @@ proof -
           ; simp? ; metis)
 qed
 
-lemma morphism_worlds_axiomI: 
+(* UNUSED lemma morphism_worlds_axiomI: 
   assumes "\<And>w. w \<in> \<W>\<^bsub>src\<^esub> \<Longrightarrow> \<exists>w' \<in> \<W>\<^bsub>tgt\<^esub>. m ` w = w' \<inter> (m ` \<I>\<^bsub>src\<^esub>)"
        "\<And>w'. w' \<in> \<W>\<^bsub>tgt\<^esub> \<Longrightarrow> \<exists>w \<in> \<W>\<^bsub>src\<^esub>. m ` w = w' \<inter> (m ` \<I>\<^bsub>src\<^esub>)"
   shows "{ w \<inter> m ` \<I>\<^bsub>src\<^esub> | w . w \<in> \<W>\<^bsub>tgt\<^esub>} = { m ` w | w . w \<in> \<W>\<^bsub>src\<^esub>}" 
   apply (intro morphism_worlds_axiom_iff[THEN iffD2,OF conjI,OF ballI ballI])
-  using assms by metis+
+  using assms by metis+ *)
 
 locale individual_structure_morphism_defs =
   src: individual_structure_defs src +
@@ -246,11 +246,11 @@ lemma sws_equality:
   using some1_equality[OF sws_unique,simplified sws_def[symmetric],
       of w w'] assms by metis
 
-lemma sws_tws_eq_id[simp]: 
+(* UNUSED lemma sws_tws_eq_id[simp]: 
   assumes "w \<in> \<W>\<^bsub>src\<^esub>"
   shows "sws (tws w) = w"
   using assms apply (elim twsE)
-  by (intro sws_equality assms ; simp)
+  by (intro sws_equality assms ; simp) *)
 
 lemma image_negE: 
   fixes x  :: "'b" and f :: "'a \<Rightarrow> 'b" and A
@@ -258,7 +258,7 @@ lemma image_negE:
   obtains "\<And>y. y \<in> A \<Longrightarrow> f y \<noteq> x"
   using assms by blast
 
-lemma m_inv_aux_1: "m_inv ` (A \<inter> m ` \<I>\<^bsub>src\<^esub>) = m_inv ` A \<inter> \<I>\<^bsub>src\<^esub>"
+(* UNUSED lemma m_inv_aux_1: "m_inv ` (A \<inter> m ` \<I>\<^bsub>src\<^esub>) = m_inv ` A \<inter> \<I>\<^bsub>src\<^esub>"
   supply individuals_image_iff[simp]
   apply (intro inv_into_aux_2[
     where ?g=m_inv and ?f=m and ?X="\<I>\<^bsub>src\<^esub>" and ?b=undefined,
@@ -283,9 +283,9 @@ lemma m_inv_aux_1: "m_inv ` (A \<inter> m ` \<I>\<^bsub>src\<^esub>) = m_inv ` A
       subgoal G8 by blast      
       by (metis imageE)
     done
-  done
+  done *)
 
-lemma m_inv_aux_2: 
+(* UNUSED lemma m_inv_aux_2: 
   assumes "A \<subseteq> m ` \<I>\<^bsub>src\<^esub>"
   shows "m_inv ` (A \<inter> m ` \<I>\<^bsub>src\<^esub>) = inv_into \<I>\<^bsub>src\<^esub> m  ` (A \<inter> m ` \<I>\<^bsub>src\<^esub>)"
 proof -
@@ -309,9 +309,9 @@ proof -
       subgoal G1 using m_inv_def by auto      
       using m_inv_individuals by auto
     done
-qed
+qed *)
 
-lemma m_inv_subset_img:
+(* UNUSED lemma m_inv_subset_img:
   assumes "A \<subseteq> m ` \<I>\<^bsub>src\<^esub>"
   shows "m_inv ` A = inv_into \<I>\<^bsub>src\<^esub> m ` A" 
   apply (intro set_eqI iffI ; (elim imageE)? ; hypsubst_thin
@@ -322,7 +322,7 @@ lemma m_inv_subset_img:
   subgoal for x
     by (intro bexI[of _ x] ; simp only: m_inv_def
             ; intro if_P[symmetric] assms[THEN subsetD] ; simp)
-  done
+  done *)
 
 lemma m_image_injective_on_subsets_of_I[intro!,simp]:
   "inj_on ((`) m) (Pow \<I>\<^bsub>src\<^esub>)"
@@ -331,8 +331,8 @@ lemma m_image_injective_on_subsets_of_I[intro!,simp]:
       m_injective)
    by blast
 
-lemma worlds_in_Pow_I: "\<W>\<^bsub>src\<^esub> \<subseteq> Pow \<I>\<^bsub>src\<^esub>"
-  using src.worlds_are_made_of_individuals by blast
+(* UNUSED lemma worlds_in_Pow_I: "\<W>\<^bsub>src\<^esub> \<subseteq> Pow \<I>\<^bsub>src\<^esub>"
+  using src.worlds_are_made_of_individuals by blast *)
 
 
 lemma m_image_injective_on_worlds[intro!,simp]:
@@ -341,12 +341,12 @@ lemma m_image_injective_on_worlds[intro!,simp]:
       inj_on_subset src.worlds_are_made_of_individuals
   by blast
 
-lemma m_unique_image:
+(* UNUSED lemma m_unique_image:
   assumes "w\<^sub>1 \<in> \<W>\<^bsub>src\<^esub>" "w\<^sub>2 \<in> \<W>\<^bsub>src\<^esub>" "m ` w\<^sub>1 = m ` w\<^sub>2"
   shows "w\<^sub>1 = w\<^sub>2"
-  using inj_onD[OF m_image_injective_on_worlds] assms by metis
+  using inj_onD[OF m_image_injective_on_worlds] assms by metis *)
 
-lemma sws_eq_inv_into: 
+(* UNUSED lemma sws_eq_inv_into: 
   assumes "w \<in> \<W>\<^bsub>tgt\<^esub>"
   shows "sws w =  inv_into \<W>\<^bsub>src\<^esub> (\<lambda>w'. m ` w' \<union> (w - m ` \<I>\<^bsub>src\<^esub>)) w"
 proof -    
@@ -391,10 +391,10 @@ proof -
         of "\<lambda>w'. m ` w' \<union> (w - m ` \<I>\<^bsub>src\<^esub>)", simplified,
           simplified ])
     by (intro CC DD ; simp add: AA)
-qed    
+qed *)
 
-lemma m_inj_worlds: "w \<in> \<W>\<^bsub>tgt\<^esub> \<Longrightarrow> \<exists>!w'. w' \<in> \<W>\<^bsub>src\<^esub> \<and> w \<inter> m ` \<I>\<^bsub>src\<^esub> = m ` w'"   
-  by (metis sws_unique)
+(* UNUSED lemma m_inj_worlds: "w \<in> \<W>\<^bsub>tgt\<^esub> \<Longrightarrow> \<exists>!w'. w' \<in> \<W>\<^bsub>src\<^esub> \<and> w \<inter> m ` \<I>\<^bsub>src\<^esub> = m ` w'"   
+  by (metis sws_unique) *)
 
 
 
@@ -404,11 +404,11 @@ lemma m_inv_comp_m_eq'[simp]:
   apply (cases "y \<in> \<I>\<^bsub>src\<^esub>" ; simp add: m_inv_individuals m_inv_def)         
   by (metis imageE m_individuals)
   
-lemma m_inv_comp_m_image': 
+(* UNUSED lemma m_inv_comp_m_image': 
   fixes X
   shows "\<Theta> ` \<Omega> ` X = X \<inter> \<I>\<^bsub>src\<^esub> \<union> { undefined | x .  x \<in> X \<and> x \<notin> \<I>\<^bsub>src\<^esub> }"
   apply (intro set_eqI ; simp add: image_iff)    
-  by metis
+  by metis *)
 
 lemma m_inv_comp_m_I_image'[simp]: 
   fixes X assumes "X \<subseteq> \<I>\<^bsub>src\<^esub>"
@@ -422,7 +422,7 @@ lemma m_inv_comp_m_I2_image'[simp]:
 
 
 
-lemma m_inv_inj_worlds_1: 
+(* UNUSED lemma m_inv_inj_worlds_1: 
   assumes "w \<in> \<W>\<^bsub>tgt\<^esub>"
   shows "m_inv ` ( w \<inter> m ` \<I>\<^bsub>src\<^esub> ) \<in> \<W>\<^bsub>src\<^esub>"
 proof -  
@@ -434,7 +434,7 @@ proof -
   then have "w' = m_inv ` (w \<inter> m ` \<I>\<^bsub>src\<^esub>)" using B 
     by auto
   then show ?thesis using A(1) by simp
-qed
+qed *)
 
 
 
@@ -500,7 +500,7 @@ lemma worlds1': "{w \<inter> m ` \<I>\<^bsub>src\<^esub> |w. w \<in> \<W>\<^bsub
   subgoal for w        
     using m_preserve_worlds_D(1)
     by (metis m_surjective tgt_worlds)
-  done
+  done 
 
 end
 
@@ -513,11 +513,11 @@ begin
 lemma m_bijective: "bij_betw m \<I>\<^bsub>src\<^esub> \<I>\<^bsub>tgt\<^esub>"
   using m_injective m_surjective bij_betw_def by metis
 
-lemma m_bijective_on_substantials: "bij_betw m \<S>\<^bsub>src\<^esub> \<S>\<^bsub>tgt\<^esub>"
-  using m_injective_on_substantials m_surjective_on_substantials bij_betw_def by metis
+(* UNUSED lemma m_bijective_on_substantials: "bij_betw m \<S>\<^bsub>src\<^esub> \<S>\<^bsub>tgt\<^esub>"
+  using m_injective_on_substantials m_surjective_on_substantials bij_betw_def by metis *)
 
-lemma m_bijective_on_moments: "bij_betw m \<M>\<^bsub>src\<^esub> \<M>\<^bsub>tgt\<^esub>"
-  using m_injective_on_moments m_surjective_on_moments bij_betw_def by metis
+(* UNUSED lemma m_bijective_on_moments: "bij_betw m \<M>\<^bsub>src\<^esub> \<M>\<^bsub>tgt\<^esub>"
+  using m_injective_on_moments m_surjective_on_moments bij_betw_def by metis *)
 
 lemma  m_preserce_refers_to_1[simp]:"m x \<hookrightarrow>\<^bsub>tgt\<^esub> m y \<longleftrightarrow> x \<hookrightarrow>\<^bsub>src\<^esub> y"  
   by (metis m_inv_substantials m_preserve_refers_to m_substantials src.refers_to_scope)
@@ -605,27 +605,27 @@ lemma m_inv_bijective[simp,intro!]: "bij_betw m_inv \<I>\<^bsub>tgt\<^esub> \<I>
 lemma m_inv_injective[simp,intro!]: "inj_on m_inv \<I>\<^bsub>tgt\<^esub>"
   using bij_betw_imp_inj_on m_inv_bijective by metis
 
-lemma m_inv_individual_structure_injective_morphism[intro!,simp]: "individual_structure_injective_morphism tgt src m_inv"
-  by (unfold_locales ; simp)
+(* UNUSED lemma m_inv_individual_structure_injective_morphism[intro!,simp]: "individual_structure_injective_morphism tgt src m_inv"
+  by (unfold_locales ; simp) *)
 
-lemma m_inv_individual_structure_surjective_morphism[intro!,simp]: "individual_structure_surjective_morphism tgt src m_inv"
-  by (unfold_locales ; simp)
+(* UNUSED lemma m_inv_individual_structure_surjective_morphism[intro!,simp]: "individual_structure_surjective_morphism tgt src m_inv"
+  by (unfold_locales ; simp) *)
 
 lemma m_inv_individual_structure_bijective_morphism[intro!,simp]: "individual_structure_bijective_morphism tgt src m_inv"
   by (unfold_locales ; simp)
 
 
-lemma worlds1': "{w \<inter> m ` \<I>\<^bsub>src\<^esub> |w. w \<in> \<W>\<^bsub>tgt\<^esub>} = \<W>\<^bsub>tgt\<^esub>" for w  
+(* UNUSED lemma worlds1': "{w \<inter> m ` \<I>\<^bsub>src\<^esub> |w. w \<in> \<W>\<^bsub>tgt\<^esub>} = \<W>\<^bsub>tgt\<^esub>" for w  
   apply (simp ; intro set_eqI ; simp ; intro iffI ; (elim exE conjE imageE)? ; hypsubst_thin? ; simp?)
   subgoal for w    
     by (metis m_surj_worlds m_surjective swsE tgt_worlds)
   subgoal for w        
     using m_preserve_worlds_D(1) 
     by (metis m_surjective tgt_worlds)
-  done
+  done *)
 
-lemma m_preserve_worlds2'[simp]: "(`) m ` \<W>\<^bsub>src\<^esub> = \<W>\<^bsub>tgt\<^esub>"
-  using m_preserve_worlds[simplified worlds1' worlds2] by simp
+(* UNUSED lemma m_preserve_worlds2'[simp]: "(`) m ` \<W>\<^bsub>src\<^esub> = \<W>\<^bsub>tgt\<^esub>"
+  using m_preserve_worlds[simplified worlds1' worlds2] by simp *)
 
 lemma m_comp_m_inv_eq'[simp]: 
   fixes y
@@ -671,11 +671,11 @@ locale individual_structure_permutation_morphism =
     m_strong_preserve_similarity[intro!]: "x \<in> \<M> \<Longrightarrow> x \<simeq> \<Omega> x"
 begin
 
-lemmas m_strong_preserve_similarity_2[intro!] =  m_strong_preserve_similarity[symmetric]
+(* UNUSED lemmas m_strong_preserve_similarity_2[intro!] =  m_strong_preserve_similarity[symmetric] *)
 
 declare tgt_worlds[simp del]
 
-lemmas tgt_worlds_2[simp] = tgt_worlds[symmetric]
+(* UNUSED lemmas tgt_worlds_2[simp] = tgt_worlds[symmetric] *)
 
 lemma m_inv_individual_structure_permutation_morphism[simp,intro!]: "individual_structure_permutation_morphism IS \<Theta>"
 proof -
@@ -694,10 +694,10 @@ proof -
   qed
 qed
 
-lemmas worlds1 = worlds1'[simplified]
+(* UNUSED lemmas worlds1 = worlds1'[simplified] *)
 
-declare m_preserve_worlds2'[simp del]
-lemmas m_preserve_worlds2[simp] = m_preserve_worlds2'[simplified]
+(* UNUSED declare m_preserve_worlds2'[simp del] *)
+(* UNUSED lemmas m_preserve_worlds2[simp] = m_preserve_worlds2'[simplified] *)
 
 declare m_surjective[simp del]
 
@@ -707,9 +707,9 @@ lemma m_w_W[simp]: "\<Omega> ` w \<in> \<W> \<longleftrightarrow> w \<in> \<W>" 
 proof -
   have A: "w' \<in> \<W> \<and> w = w' \<inter>  \<I> \<longleftrightarrow> w' \<in> \<W> \<and> w = w'" for w w'
     using worlds_are_made_of_individuals by blast
-  have B: "{w \<inter> \<Omega> ` \<I> |w. w \<in> \<W>} = \<W>"  using worlds1 m_surjective[simplified] by simp
+  have B: "{w \<inter> \<Omega> ` \<I> |w. w \<in> \<W>} = \<W>"  using worlds1' m_surjective[simplified] by simp
   have "w \<in> \<W> \<longleftrightarrow> w \<in> {w \<inter> \<Omega> ` \<I> |w. w \<in> \<W>}"
-    by (simp add: worlds1[symmetric,THEN eqset_imp_iff,of w])    
+    by (simp add: worlds1'[symmetric,THEN eqset_imp_iff,of w])    
   also have "... \<longleftrightarrow> (\<exists>w'. w' \<in> \<W> \<and> w = w' \<inter>  \<Omega> ` \<I>)"
     by blast
   also have "... \<longleftrightarrow> (\<exists>w'. w' \<in> \<W> \<and> w = w' \<inter>  \<I>)" by auto
@@ -784,12 +784,12 @@ context individual_structure
 begin
 
 
-lemma inv_perm_in_perm[intro!,simp]:
+(* UNUSED lemma inv_perm_in_perm[intro!,simp]:
   assumes "m \<in> Perms" 
   shows "individual_structure_morphism_defs.\<Theta> IS m \<in> Perms" (is "?m' \<in> Perms")
   using individual_structure_permutation_morphism.m_inv_individual_structure_permutation_morphism[of IS m]
     assms Perms_def 
-  by simp
+  by simp *)
 
 lemma id_on_perm: "id \<in> Perms"
 proof -
@@ -807,12 +807,12 @@ qed
 
 end
 
-context individual_structure_permutation_morphism
+(* UNUSED context individual_structure_permutation_morphism
 begin
 
-lemma omega_in_perms[intro!,simp]: "\<Omega> \<in> Perms"  
-  by (simp add: Perms_def  individual_structure_permutation_morphism_axioms)
+ lemma omega_in_perms[intro!,simp]: "\<Omega> \<in> Perms"  
+  by (simp add: Perms_def  individual_structure_permutation_morphism_axioms) 
 
-end
+end *)
 
 end

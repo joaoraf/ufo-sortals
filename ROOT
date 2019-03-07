@@ -4,7 +4,11 @@ session Sortals = HOL +
     Common
   theories
     Individuals
+    IndividualMorphisms
+    IndividualSubStructure
     Universals
-    Instantiation    
+    Instantiation
+    Projection
+    Sortals
   document_files
     "root.tex"

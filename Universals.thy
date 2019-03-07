@@ -1,4 +1,4 @@
-theory Universals2
+theory Universals
   imports Common
 begin
 
@@ -7,7 +7,7 @@ record 'u universal_structure =
   characterized_by :: "'u \<Rightarrow> 'u \<Rightarrow> bool" ("char'_by\<index>") 
   moment_subsumption :: "'u \<Rightarrow> 'u \<Rightarrow> bool" (infix "\<preceq>\<^sub>m\<index>" 75)
 
-lemma universal_structure_eq_I:
+(* UNUSED lemma universal_structure_eq_I:
   fixes X :: "'u universal_structure" and
         Y :: "'u universal_structure" 
   assumes "\<U>\<^bsub>X\<^esub> = \<U>\<^bsub>Y\<^esub>"
@@ -15,7 +15,7 @@ lemma universal_structure_eq_I:
           "(\<preceq>\<^sub>m\<^bsub>X\<^esub>) = (\<preceq>\<^sub>m\<^bsub>Y\<^esub>)"          
         shows "X = Y"
   using assms
-  by simp
+  by simp *)
   
 
 definition moment_universals  ("\<U>\<^sub>m\<index>") where
@@ -188,20 +188,20 @@ lemma substantial_subsumption_antisym:
   using C 
   by (simp add: A(1) A(2) subst_univ_eq_char_set)
 
-lemma substantial_subsumption_trans:
+(* UNUSED lemma substantial_subsumption_trans:
   assumes "U\<^sub>1 \<preceq>\<^sub>s U\<^sub>2" "U\<^sub>2 \<preceq>\<^sub>s U\<^sub>3"
   shows "U\<^sub>1 \<preceq>\<^sub>s U\<^sub>3"
   supply A = assms[THEN substantial_subsumption_E]
   apply (intro substantial_subsumption_I ; rule A(1) ; rule A(2) ; simp)  
-  using characterization_respects_subsumption by blast
+  using characterization_respects_subsumption by blast *)
   
-lemma substantial_subsumption_refl:  
+(* UNUSED lemma substantial_subsumption_refl:  
   assumes "U \<in> \<U>\<^sub>s"
   shows "U \<preceq>\<^sub>s U"
-  by (intro subst_subsumes_by_char_set[THEN iffD2] assms ; simp)
+  by (intro subst_subsumes_by_char_set[THEN iffD2] assms ; simp) *)
 
-lemma moment_char_set_empty:  "u \<in> \<U>\<^sub>m \<Longrightarrow> char_set u = {}"  
-  by (simp add: characterizing_set_def no_moment_univ_is_characterized)
+(* UNUSED lemma moment_char_set_empty:  "u \<in> \<U>\<^sub>m \<Longrightarrow> char_set u = {}"  
+  by (simp add: characterizing_set_def no_moment_univ_is_characterized) *)
   
 lemma moment_univs_are_univs: "\<U>\<^sub>m \<subseteq> \<U>"  
   using characterized_by_scope
@@ -248,9 +248,9 @@ lemma subsumes_disjointD:
   "\<lbrakk> U \<preceq>\<^sub>s U\<^sub>1 ; U\<^sub>2 \<preceq>\<^sub>m U \<rbrakk> \<Longrightarrow> False"
   by (meson moment_subsumes_scope subst_moment_univs_disj_2 substantial_subsumption_def)+
 
-lemma top_ex1_2: "\<exists>!U. \<forall>U'\<in>\<U>\<^sub>s. U' \<preceq> U"
+(* UNUSED lemma top_ex1_2: "\<exists>!U. \<forall>U'\<in>\<U>\<^sub>s. U' \<preceq> U"
   using top_ex1  
-  by (metis subsumesE subsumesI subsumes_disjointD(1))
+  by (metis subsumesE subsumesI subsumes_disjointD(1)) *)
 
 lemma top_eq:
   assumes "\<And>U'. U' \<in> \<U>\<^sub>s \<Longrightarrow> U' \<preceq> U"
@@ -291,15 +291,15 @@ lemma moment_universal_iff: "u \<in> \<U>\<^sub>m \<longleftrightarrow> (\<exist
   using every_moment_univ_characterizes universal_I   
         characterized_by_scope_E by auto
 
-lemma universal_iff: "u \<in> \<U> \<longleftrightarrow> u = \<top>\<^sub>s \<or> (\<exists>u'. char_by u u') \<or> (\<exists>u'. char_by u' u)"
+(* UNUSED lemma universal_iff: "u \<in> \<U> \<longleftrightarrow> u = \<top>\<^sub>s \<or> (\<exists>u'. char_by u u') \<or> (\<exists>u'. char_by u' u)"
   using universal_exhaust subst_universal_iff moment_universal_iff
-        universal_I by metis
+        universal_I by metis *)
 
 lemma finite_subst_univs[intro!]: "finite \<U>\<^sub>s" 
   using finite_univs finite_subset substantial_univs_are_univs by blast
 
-lemma finite_moment_univs[intro!]: "finite \<U>\<^sub>m" 
-  using finite_univs finite_subset moment_univs_are_univs by blast
+(* UNUSED lemma finite_moment_univs[intro!]: "finite \<U>\<^sub>m" 
+  using finite_univs finite_subset moment_univs_are_univs by blast *)
 
 lemma subsumes_scope: 
   assumes "U \<preceq> U'"
@@ -357,7 +357,7 @@ lemma subsumes_refl:
   using moment_subsumes_refl by simp
 
 
-lemma subsumes_antisym: 
+(* UNUSED lemma subsumes_antisym: 
   assumes "U \<preceq> U'" "U' \<preceq> U" 
   shows "U = U'" 
 proof -
@@ -367,11 +367,11 @@ proof -
     by (meson subsumesE subsumes_disjointD(2)) 
   then show ?thesis
     using moment_subsumes_antisym subst_subsumes_antisym by metis
-qed
+qed *)
 
 
 
-lemma subsumes_trans: 
+(* UNUSED lemma subsumes_trans: 
   assumes "U\<^sub>1 \<preceq> U\<^sub>2" "U\<^sub>2 \<preceq> U\<^sub>3"
   shows "U\<^sub>1 \<preceq> U\<^sub>3" 
 proof -
@@ -387,7 +387,7 @@ proof -
       using subst_subsumes_by_char_set by blast      
     then show "U\<^sub>1 \<preceq> U\<^sub>3" by auto
   qed
-qed
+qed *)
 
 
 lemma top_I:
@@ -400,9 +400,9 @@ lemma top_subsumes: "U \<in> \<U>\<^sub>s \<Longrightarrow> U \<preceq> \<top>\<
 
 
 
-lemma top_subst_univ: "\<top>\<^sub>s \<in> \<U>\<^sub>s" 
+(* UNUSED lemma top_subst_univ: "\<top>\<^sub>s \<in> \<U>\<^sub>s" 
   using top_I at_least_one_subst_univ 
-  by (metis disjoint_iff_not_equal ex_in_conv subst_moment_univs_disj subsumes_scope)
+  by (metis disjoint_iff_not_equal ex_in_conv subst_moment_univs_disj subsumes_scope) *)
 
 lemma unique_introduction_2:
   assumes "u \<in> \<U>\<^sub>m"
@@ -555,11 +555,11 @@ qed
 definition int_univ :: "'u \<Rightarrow> 'u" where
   "int_univ u \<equiv> THE U. char_by U u \<and> (\<forall>U'. char_by U' u \<longrightarrow> U' \<preceq>\<^sub>s U)" 
 
-lemma init_univ_eq:
+(* UNUSED lemma init_univ_eq:
   assumes "char_by U u" "\<And>U'. char_by U' u \<Longrightarrow> U' \<preceq>\<^sub>s U"
   shows "int_univ u = U"
   apply (simp only: int_univ_def ; intro the1_equality unique_introduction_2 conjI assms(1) ; clarify?)
-  using assms characterized_by_scope_E[OF assms(1)] by metis+
+  using assms characterized_by_scope_E[OF assms(1)] by metis+ *)
 
 
 lemma init_univ_I:
@@ -571,19 +571,19 @@ lemma init_univ_I:
     by (metis assms (2) Q)
   done
 
-lemma init_univ_char_by[intro!]:
+(* UNUSED lemma init_univ_char_by[intro!]:
   assumes "u \<in> \<U>\<^sub>m"    
   shows "char_by (int_univ u) u" 
-  by (rule init_univ_I[OF assms] ; simp)+
+  by (rule init_univ_I[OF assms] ; simp)+ *)
 
-lemma init_univ_subsumes[intro!]: 
+(* UNUSED lemma init_univ_subsumes[intro!]: 
   assumes "char_by U u" 
   shows "U \<preceq>\<^sub>s (int_univ u)"
   apply (rule init_univ_I )
   subgoal using assms characterized_by_scope_E by metis
-  using assms by simp  
+  using assms by simp  *)
 
-lemma char_by_subsumes: 
+(* lemma char_by_subsumes: 
   assumes "char_by U\<^sub>1 U\<^sub>2" "U\<^sub>2 \<preceq> U\<^sub>3"
   shows "char_by U\<^sub>1 U\<^sub>3"
 proof -
@@ -593,7 +593,7 @@ proof -
     using assms(2) by (meson subst_moment_univs_disj_2 subsumption_def)
   then show ?thesis 
     using assms characterization_respects_subsumption by metis
-qed
+qed *)
 
 
 
@@ -626,7 +626,7 @@ lemma terminal_universal_subset: "\<U>\<^sub>\<bottom> \<subseteq> \<U>\<^sub>s"
   using terminal_universal_E 
   by force
 
-lemma (in universal_structure) terminal_universal_top:
+(* UNUSED lemma (in universal_structure) terminal_universal_top:
   assumes "\<top>\<^sub>s \<in> \<U>\<^sub>\<bottom>"
   shows "\<U>\<^sub>s = {\<top>\<^sub>s}"
   apply (intro equalityI subsetI ; simp)
@@ -646,14 +646,14 @@ lemma (in universal_structure) terminal_universal_top:
         using Q top_subsumes by presburger
     qed
     done
-  done
+  done *)
 
 
 
-lemma (in universal_structure) terminal_universal_iff:
+(* UNUSED lemma (in universal_structure) terminal_universal_iff:
     "\<U>\<^sub>s = {\<top>\<^sub>s} \<longleftrightarrow> \<U>\<^sub>\<bottom> = {\<top>\<^sub>s}"
   using terminal_universal_top 
-  by (metis empty_iff insert_iff subset_singleton_iff substantial_subsumption_scope(1) terminal_universal_I terminal_universal_subset)
+  by (metis empty_iff insert_iff subset_singleton_iff substantial_subsumption_scope(1) terminal_universal_I terminal_universal_subset) *)
   
 
 end

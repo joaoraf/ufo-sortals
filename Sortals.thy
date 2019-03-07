@@ -1,5 +1,5 @@
-theory Sortals3
-  imports Projection3_1 
+theory Sortals
+  imports Projection 
 begin
 
 context instantiation_structure_defs

@@ -1,7 +1,6 @@
-theory Projection3_1
-  imports Instantiation4 IndividualSubStructure IndividualMorphisms
+theory Projection
+  imports Instantiation IndividualSubStructure IndividualMorphisms
 begin
-
 
 context instantiation_structure_defs
 begin
@@ -18,9 +17,6 @@ lemma excluded_moments_E[elim]:
   assumes "m \<in> excluded_moments U" 
   obtains x where "m \<in> \<M>\<^sub>*" "\<beta>\<^sub>* m \<Colon>\<^sub>\<diamondop> U"  "\<And>u'. char_by\<^sub>* U u' \<Longrightarrow> \<not> m \<Colon>\<^sub>m\<^sub>\<diamondop> u'"
   using assms by (auto simp: excluded_moments_def)
-
-lemma excluded_moments_are_moments:
-    "excluded_moments U \<subseteq> \<M>\<^sub>*"  by blast
 
 lemma excluded_moments_iff:
   "m \<in> excluded_moments U \<longleftrightarrow> m \<in> \<M>\<^sub>* \<and> \<beta>\<^sub>* m \<Colon>\<^sub>\<diamondop> U \<and> (\<forall>u'. char_by\<^sub>* U u' \<longrightarrow> \<not> m \<Colon>\<^sub>m\<^sub>\<diamondop> u')"
@@ -144,15 +140,8 @@ lemma moments_closed_on_sim[simp,intro!]: "closure_rel_P (\<sim>) \<M>\<^sub>*"
   apply (simp only: individuals_moments_substantials)
   using substantials_moments_disj by blast
 
-lemma proj_moments_closed_on_sim: "closure_rel_P (\<sim>) \<M>\<^sup>\<down>"
-  by (simp only: project_simps(6)[of U] ; intro closure_rel_combs ; simp)
- 
 lemma projected_out_moments_are_moments:  "\<Delta> \<subseteq> \<M>\<^sub>*"
   by (meson momentsI excluded_moments_iff subsetI)
-
-lemma project_bearer_simp[simp]:
-  "\<beta>\<^sup>\<down> \<Omega> = (if \<Omega> \<in> \<Delta> then undefined else \<beta>\<^sub>* \<Omega>)"
-  by (simp cong: if_cong bearer_def)
 
 lemma project_individuals_eq: "\<I>\<^sup>\<down> = \<S>\<^sub>* \<union> \<M>\<^sub>* - \<Delta>"
   by (simp add: project_simps(1) individuals_moments_substantials)
@@ -255,24 +244,7 @@ lemma project_out_moments_mono[intro!]:
     subgoal G1 using assms bearer_eq miof_agrees_with_subsumes subsumesI_S by auto
     subgoal G2 using bearer_eq by (meson assms excluded_moments_iff miof_agrees_with_subsumes subsumesI_S)    
     using assms char_by_scope(1) subst_subsumes_by_char_set by auto
-  done  
-
-lemma project_moments_antimono[intro!]:
-  assumes "U \<preceq>\<^sub>s\<^sub>* U'"
-  shows "moments (project U') \<subseteq> moments (IS\<^sup>\<down>)"
-  apply (intro subsetI ; simp)
-  using project_out_moments_mono[OF assms] by blast
-
-lemma project_substantials_constant[simp]:
-  assumes "U \<preceq>\<^sub>s\<^sub>* U'"
-  shows "substantials (IS\<^sup>\<down>) = substantials (project U')"
-  by (auto)
-
-lemma project_individuals_antimono[intro!]:
-  assumes "U \<preceq>\<^sub>s\<^sub>* U'"
-  shows "individuals (project U') \<subseteq> \<I>\<^sup>\<down>"
-  using assms 
-  by (simp add: Diff_mono instantiation_structure_defs.project_simps(1) project_out_moments_mono)
+  done
 
 lemma individuals_exhaust_2:
   obtains "y \<in> \<I>\<^sub>*" "y \<in> \<S>\<^sub>*" "y \<notin> \<M>\<^sub>*" "y \<notin> \<Delta>" "y \<noteq> undefined"  | 
@@ -291,7 +263,7 @@ proof -
   show ?thesis
     by (cases "y \<in> \<I>\<^sub>*" ; cases "y \<in> \<S>\<^sub>*" ; cases "y \<in> \<M>\<^sub>*" ; cases "y \<in> \<Delta>" ; cases "y = undefined"
         ; insert simps that ; metis)
-qed
+qed 
 
 
 context
@@ -360,22 +332,6 @@ proof (intro iffI)
     show ?thesis using BB(1) C[OF AA BB] by simp
   qed
 qed
-
-lemma m_preserve_m_inv_iof[simp]: 
-  fixes y u
-  shows "\<Theta> y \<Colon>\<^sub>m\<^sub>\<diamondop> u \<longleftrightarrow> y \<Colon>\<^sub>m\<^sub>\<diamondop> u" (is "?P \<longleftrightarrow> ?Q")
-proof -
-  have R1: "?thesis" if as: "y \<in> \<M>\<^sub>*" "u \<in> \<U>\<^sub>m\<^sub>*" 
-  proof -
-    have A[simp]: "\<Omega> (\<Theta> y) = y" using as m_inv_inv_individuals[of y]
-      by (simp add: moments_are_individuals)
-    show ?thesis
-      by (subst m_preserve_m_iof[of "\<Theta> y" u,symmetric] ; simp only: A) 
-  qed
-  obtain R2: "y \<in> \<M>\<^sub>*" "u \<in> \<U>\<^sub>m\<^sub>*" if "?P \<or> ?Q"    
-    using moment_miof_scope by blast
-  show ?thesis using R1 R2 by metis
-qed 
 
 lemma m_preserve_s_iof:
   fixes x\<^sub>s U\<^sub>s
@@ -477,11 +433,6 @@ lemma m_preserve_miof[simp]:
   subgoal notInI by (simp add: miof_out_scope)
   done
 
-lemma m_inv_preserve_miof[simp]: 
-  fixes y u
-  shows "\<Theta> y \<Colon>\<^sub>\<diamondop> u \<longleftrightarrow> y \<Colon>\<^sub>\<diamondop> u" (is "?P \<longleftrightarrow> ?Q")  
-  by (metis m_comp_m_inv_eq' m_inv.m_individuals m_preserve_miof miof_sep_simps(3))
-
 lemma m_projected_out_moments[simp]: "\<And>x. \<Omega> x \<in> \<Delta> \<longleftrightarrow> x \<in> \<Delta>"   
   by (smt \<Omega>_closed_I delta_closure.closed_iff individuals_exhaust_2 m_undefined_1(2))
 
@@ -505,32 +456,6 @@ lemma m'_image1: "X \<subseteq> \<I>\<^sup>\<down> \<Longrightarrow> \<Omega>\<^
         ; intro ex_iff_exI[where ?f=id and ?g=id] ; simp
         ; elim conjE ; hypsubst_thin?
         ; simp add: proj_morph_def) 
-
-
-lemma m'_image2: 
-  assumes "\<not> X \<subseteq> \<I>\<^sup>\<down>"
-  shows "\<Omega>\<^sup>\<down> ` X = insert undefined (\<Omega> ` (X \<inter> \<I>\<^sup>\<down>))"
-proof -
-  have A: "X = (X \<inter> \<I>\<^sup>\<down>) \<union> (X - \<I>\<^sup>\<down>)" by blast
-  then have "\<Omega>\<^sup>\<down> ` X = \<Omega>\<^sup>\<down> ` (X \<inter> \<I>\<^sup>\<down>) \<union> \<Omega>\<^sup>\<down> ` (X - \<I>\<^sup>\<down>)"     
-    using image_Un by metis
-  also have "... = \<Omega> ` (X \<inter> \<I>\<^sup>\<down>) \<union> \<Omega>\<^sup>\<down> ` (X - \<I>\<^sup>\<down>)" when "\<Omega>\<^sup>\<down> ` (X \<inter> \<I>\<^sup>\<down>) = \<Omega> ` (X \<inter> \<I>\<^sup>\<down>)" (is "?A") using that by metis
-  also have "... = \<Omega> ` (X \<inter> \<I>\<^sup>\<down>) \<union> {undefined}" when "\<Omega>\<^sup>\<down> ` (X - \<I>\<^sup>\<down>) = {undefined}" (is "?B") using that by metis
-  finally show ?thesis when "?A" "?B" using that by blast
-next
-  have "X \<inter> \<I>\<^sup>\<down> \<subseteq> \<I>\<^sup>\<down>" by blast
-  then show "\<Omega>\<^sup>\<down> ` (X \<inter> \<I>\<^sup>\<down>) = \<Omega> ` (X \<inter> \<I>\<^sup>\<down>)"  using m'_image1 by blast
-next
-  have A:"X - \<I>\<^sup>\<down> \<noteq> {}" using assms by blast
-  then obtain a where A1: "a \<in> X" "a \<notin> \<I>\<^sup>\<down>" by blast
-  then obtain A2: "a \<notin> \<S>\<^sub>*" "a \<in> \<M>\<^sub>* \<Longrightarrow> a \<in> \<Delta>" 
-    using excluded_moments_iff project_simps(1) by auto 
-  have B: "\<Omega>\<^sup>\<down> x = undefined" if "x \<notin> \<I>\<^sup>\<down>" for x
-    using that by (simp add: proj_morph_def ; elim conjE DiffE conjE impCE ; intro impI ; elim conjE DiffE ; simp) 
-  show "\<Omega>\<^sup>\<down> ` (X - \<I>\<^sup>\<down>) = {undefined}"
-    by (intro equalityI subsetI ; simp  add: image_iff Bex_def ; (elim exE conjE ; hypsubst_thin)?
-        ; (simp add: B)? ; intro exI[of _ a] ; simp add: A1 A2 B) 
-qed 
 
 private lemma not_image_E:
   assumes "f y \<notin> f ` Y"
@@ -562,17 +487,9 @@ definition world_project :: "'i set \<Rightarrow> 'i set" ("_\<down>" [1000] 999
 lemma world_project_I[intro!]: "w \<in> \<W>\<^sub>* \<Longrightarrow> w\<down> \<in> \<W>\<^sup>\<down>"
   by (simp add: world_project_def ; blast)
 
-lemma world_project_subset_1[intro!]: "w \<in> \<W>\<^sub>* \<Longrightarrow> w\<down> \<subseteq> \<I>\<^sup>\<down>"
-  apply (simp add: world_project_def)
-  using IS'.worlds_are_made_of_individuals world_project_I world_project_def by auto
-
 lemma world_project_subset_2[intro!]: "w \<in> \<W>\<^sub>* \<Longrightarrow> w\<down> \<subseteq> \<I>\<^sub>*"
   apply (simp add: world_project_def)  
   by (meson Diff_subset dual_order.trans worlds_are_made_of_individuals)
-
-lemma world_project_delta_disj: "w \<in> \<W>\<^sub>* \<Longrightarrow> w\<down> \<inter> \<Delta> = {}"
-  apply (simp add: world_project_def)  
-  by blast
 
 lemma world_project_eq_int: 
   assumes "w \<in> \<W>\<^sub>*"
@@ -587,7 +504,7 @@ proof -
     subgoal  using worlds_are_made_of_individuals[OF assms] 
       apply (simp only: project_simps(1)) by blast
     done
-qed
+qed 
    
   
 
@@ -619,36 +536,6 @@ lemma world_lift_project[simp]:
   shows "(w\<up>)\<down> = w"
   using assms 
   by (metis world_lift_E world_project_def)
-
-lemma world_project_subset[simp,intro!]: 
-  assumes "w \<in> \<W>\<^sub>*" 
-  shows "w\<down> \<subseteq> w"
-  using assms   
-  by (simp add: Diff_subset world_project_def)
-
-lemma world_lift_diff[simp,intro!]:
- assumes "w \<in> \<W>\<^sup>\<down>"
- shows "w\<up> - w \<subseteq> \<Delta>"
-  using assms
-  by blast
-
-lemma world_lift_split[simp]:
- assumes "w \<in> \<W>\<^sup>\<down>"
- shows "w\<up> = w \<union> (w\<up> \<inter> \<Delta>)"
-  using assms
-  by blast
-
-lemma world_lift_int_abs[simp]:
- assumes "w \<in> \<W>\<^sup>\<down>"
- shows "w\<up> \<inter> w = w"
-  using assms
-  by blast
-
-lemma world_lift_un_abs[simp]:
- assumes "w \<in> \<W>\<^sup>\<down>"
- shows "w\<up> \<union> w = w\<up>"
-  using assms
-  by blast
   
 lemma delta_morph[simp]: "\<Omega> ` \<Delta> = \<Delta>"  
 proof -
@@ -834,20 +721,6 @@ lemma m'_permutation[intro!,simp]: "individual_structure_permutation_morphism IS
 interpretation m': individual_structure_permutation_morphism "IS\<^sup>\<down>" "\<Omega>\<^sup>\<down>"
   by simp
 
-
-lemma non_triv_perm_transfer:
-  assumes "x \<Colon>\<^sub>\<diamondop> U" 
-  shows "\<Omega>\<^sup>\<down> x \<noteq> x \<longleftrightarrow> \<Omega> x \<noteq> x"  
-proof -
-  obtain A: "x \<in> \<S>\<^sub>*" 
-    using assms(1) U_subst_univ
-    by (meson instantiation_structure.iof_S_U_simp instantiation_structure_axioms miof_E)
-  then have B: "x \<in> \<I>\<^sup>\<down>"     
-    by (simp add: IS'.substantials_are_individuals)
-  then show ?thesis 
-    by (simp add: proj_morph_def)
-qed
-
 end (* "U \<in> \<U>\<^sub>s\<^sub>*" "\<Omega> \<in> EquiPerms"  *)
 
 lemma "EquiPerms \<subseteq> ProjEquiPerms U"
@@ -921,7 +794,7 @@ proof -
     by (rule 
         individual_structure.substructure_closed_perms[of _ "projected_structure U" "(\<sim>)"] ; 
         (simp add: A B C)?)
-qed
+qed 
 
 end (*  "U \<preceq>\<^sub>s\<^sub>* U'"   *)
 
